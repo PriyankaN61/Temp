@@ -1,0 +1,23 @@
+from collections import deque
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': [],
+    'F': []
+}
+
+def dls(node, limit):
+    print(node, end=" ")
+    if limit == 0:
+        return
+    for child in graph[node]:
+        dls(child, limit - 1)
+
+def dfid(start, max_depth):
+    for depth in range(max_depth + 1):
+        print(f"\nDepth {depth}:", end=" ")
+        dls(start, depth)
+
+dfid('A', 2)
