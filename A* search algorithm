@@ -1,0 +1,48 @@
+import heapq
+
+def a_star_search(graph, heuristic, start, goal):
+    open_list = []
+    heapq.heappush(open_list, (heuristic[start], 0, start))
+    visited = set()
+
+    while open_list:
+        f, g, node = heapq.heappop(open_list)
+        print(node, end=" ")
+
+        if node == goal:
+            print("\nGoal reached with cost:", g)
+            return
+
+        visited.add(node)
+
+        for neighbor, cost in graph[node]:
+            if neighbor not in visited:
+                new_g = g + cost
+                new_f = new_g + heuristic[neighbor]
+                heapq.heappush(open_list, (new_f, new_g, neighbor))
+
+    print("\nGoal not found")
+
+
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 1), ('E', 4)],
+    'C': [('F', 5)],
+    'D': [],
+    'E': [('G', 2)],
+    'F': [],
+    'G': []
+}
+
+heuristic = {
+    'A': 6,
+    'B': 4,
+    'C': 5,
+    'D': 3,
+    'E': 1,
+    'F': 6,
+    'G': 0
+}
+
+print("A* Search Path:")
+a_star_search(graph, heuristic, 'A', 'G')
